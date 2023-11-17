@@ -18,7 +18,7 @@
     "express": "^4.18.2",
     "front-matter": "^4.0.2",
     "isbot": "^3.6.8",
-    "mdx-bundler": "^9.2.1",
+    "mdx-bundler": "^10.0.0",
     "morgan": "^1.10.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
