@@ -8,6 +8,7 @@ import { json } from "@remix-run/server-runtime";
 import { getMDXComponent } from "mdx-bundler/client/index.js";
 import type { Frontmatter} from "../utils/blogPost.server";
 import { getPost } from "../utils/blogPost.server";
+import type { V1_MetaFunction } from "@remix-run/react/dist/routeModules";
 
 
 type LoaderData = {
@@ -32,16 +33,30 @@ export const loader: LoaderFunction = async ({ params, request }: DataFunctionAr
     return  null;
 };
 
+export const meta: V1_MetaFunction = (arg) => {
+    const frontmatter = arg.data.frontmatter as Frontmatter; 
+    const title = frontmatter.meta?.title ?? "Black Sheep Code"; 
+    const description = frontmatter.meta?.description ?? undefined
+
+    return {
+      title,
+      description, 
+      "og:twitter:title": title, 
+      "og:twitter:description": description,
+    };
+  };
+
 
 function PostHeader(props: {
     frontmatter: Frontmatter;
 }) {
 
     const { frontmatter } = props;
-    // My header is empty but this is potentially where we can add tags
-    // Make the h1 come from the post frontmatter, etc. 
+   
+
+    // We can implement whatever we want here
     return <>
-        {JSON.stringify(frontmatter)}
+        {JSON.stringify(frontmatter, null, 2)}
     </>
 }
 
@@ -52,11 +67,8 @@ export default function Post() {
 
     return (
         <>
-            HELLO
             <PostHeader frontmatter={frontmatter} />
-            <Component /> 
-
-   
+            <Component />  
         </>
     );
 }
