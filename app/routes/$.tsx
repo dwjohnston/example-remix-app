@@ -23,8 +23,6 @@ export const loader: LoaderFunction = async ({ params, request }: DataFunctionAr
     const post = await getPost(slug);
     if (post) {
         const { frontmatter, code } = post;
-
-        console.log(post)
         return json({ frontmatter, code });
     } else {
         throw new Response("Not found", { status: 404 });
