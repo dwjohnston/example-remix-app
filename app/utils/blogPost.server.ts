@@ -30,11 +30,9 @@ export async function getPost(slug: string) {
   ]);
 
   // Dyamically import all the rehype/remark plugins we are using 
-  // (Netlify won't allow us to import them directly)
   const [rehypeHighlight, remarkGfm] = await Promise.all([
     import("rehype-highlight").then((mod) => mod.default),
     import("remark-gfm").then((mod) => mod.default),
-
   ])
 
   const post = await bundleMDX<Frontmatter>({
@@ -42,8 +40,6 @@ export async function getPost(slug: string) {
     cwd: process.cwd(),
 
     esbuildOptions: (options) => {
-
-
       // Configuration to allow image loading 
       // https://github.com/kentcdodds/mdx-bundler#image-bundling
       options.loader = {
